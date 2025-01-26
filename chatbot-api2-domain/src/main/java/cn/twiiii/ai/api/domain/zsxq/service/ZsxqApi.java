@@ -75,8 +75,8 @@ public class ZsxqApi implements IZsxqApi {
 
         AnswerReq answerReq = new AnswerReq(new ReqData(text));
         String paramJson = JSONObject.toJSONString(answerReq);
-        logger.info("paramJson");
-        logger.info(paramJson);
+//        logger.info("paramJson");
+//        logger.info(paramJson);
         StringEntity stringEntity = new StringEntity(paramJson, ContentType.create("text/json", "UTF-8"));
         post.setEntity(stringEntity);
 

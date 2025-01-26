@@ -6,6 +6,7 @@ import cn.twiiii.ai.api.domain.ai.model.aggregates.AIAnswer;
 import cn.twiiii.ai.api.domain.ai.model.vo.Choices;
 import cn.twiiii.ai.api.domain.ai.model.vo.Message;
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -19,7 +20,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 小傅哥，微信：fustack
@@ -34,6 +37,7 @@ public class OpenAI implements IOpenAI {
 
     @Override
     public String doChatGPT(String openAiKey, String question) throws IOException {
+
         logger.info("doChatGPT：{}", "doChatGPT");
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         // 代理地址；open.aiproxy.xyz、open2.aiproxy.xyz
@@ -44,23 +48,7 @@ public class OpenAI implements IOpenAI {
         post.addHeader("Authorization", "Bearer " + openAiKey);
 
 //        String paramJson = "{\"model\": \"text-davinci-003\", \"prompt\": \"" + question + "\", \"temperature\": 0, \"max_tokens\": 1024}";
-//        String paramJson="{\n" +
-//                "    \"model\": \"gpt-3.5-turbo\",\n" +
-//                "    \"messages\": [\n" +
-//                "      {\n" +
-//                "        \"role\": \"system\",\n" +
-//                "        \"content\": \"You are a helpful assistant.\"\n" +
-//                "      },\n" +
-//                "      {\n" +
-//                "        \"role\": \"user\",\n" +
-//                "        \"content\": \n" +
-//                question+
-//                "      }\n" +
-//                "    ]\n" +
-//                "  }";
-
-
-        String paramJson="{\n" +
+        String paramJson0="{\n" +
                 "    \"model\": \"gpt-3.5-turbo\",\n" +
                 "    \"messages\": [\n" +
                 "      {\n" +
@@ -73,6 +61,46 @@ public class OpenAI implements IOpenAI {
                 "      }\n" +
                 "    ]\n" +
                 "  }";
+
+      String paramJson1 = "{\n" +
+                "    \"model\": \"gpt-3.5-turbo\",\n" +
+                "    \"messages\": [\n" +
+                "      {\n" +
+                "        \"role\": \"system\",\n" +
+                "        \"content\": \"You are a helpful assistant.\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "        \"role\": \"user\",\n" +
+                "        \"content\": \"" + question + "\"\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  }";
+//        logger.info(paramJson0);
+
+        ///////////////////////////避免字符串里的东西改变json/////////////////////
+        // 使用 Jackson 构建 JSON 对象
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 构建 messages 数组
+        Map<String, String> systemMessage = new HashMap<>();
+        systemMessage.put("role", "system");
+        systemMessage.put("content", "You are a helpful assistant.");
+
+        Map<String, String> userMessage = new HashMap<>();
+        userMessage.put("role", "user");
+        userMessage.put("content", question);
+
+        // 将 messages 组装到参数中
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("model", "gpt-3.5-turbo");
+        paramMap.put("messages", new Object[]{systemMessage, userMessage});
+
+        // 转换为 JSON 字符串
+        String paramJson = objectMapper.writeValueAsString(paramMap);
+        ///////////////////////////避免字符串里的东西改变json/////////////////////
+
+
+        logger.info(paramJson);
         StringEntity stringEntity = new StringEntity(paramJson, ContentType.create("text/json", "UTF-8"));
         post.setEntity(stringEntity);
 

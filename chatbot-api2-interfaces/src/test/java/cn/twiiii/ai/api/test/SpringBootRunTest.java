@@ -63,9 +63,9 @@ public class SpringBootRunTest {
             logger.info("topicId：{} text：{}", topicId, text);
 
 //            // 回答问题
-            zsxqApi.answer(groupId, cookie, topicId, "2025/1/22 from IDEA");
+//            zsxqApi.answer(groupId, cookie, topicId, "2025/1/22 from IDEA");
 
-//            zsxqApi.answer(groupId, cookie, topicId, openAI.doChatGPT(openAiKey, text));
+            zsxqApi.answer(groupId, cookie, topicId, openAI.doChatGPT(openAiKey, text));
         }
     }
     @Test

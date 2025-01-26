@@ -80,6 +80,11 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.twiiii.ai</groupId>
+            <artifactId>chatbot-api2-application</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

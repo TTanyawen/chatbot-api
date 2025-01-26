@@ -15,6 +15,7 @@
         <module>chatbot-api2-application</module>
         <module>chatbot-api2-interfaces</module>
         <module>chatbot-api2-infrastructure</module>
+        <module>chatbot-api2-common</module>
     </modules>
 
     <parent>

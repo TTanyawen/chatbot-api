@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chatbot-api2-application</artifactId>
-<!--    <packaging>jar</packaging>-->
+    <artifactId>chatbot-api2-common</artifactId>
 
     <dependencies>
         <dependency>
@@ -29,17 +28,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.twiiii.ai</groupId>
-            <artifactId>chatbot-api2-domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.twiiii.ai</groupId>
-            <artifactId>chatbot-api2-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
